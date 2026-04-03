@@ -607,7 +607,7 @@
 
         // --- Audio Elements ---
         const bgm = document.getElementById('bgm');
-        bgm.volume = 0.25;
+        bgm.volume = 0.30;
         
         const sfx = {
             click: document.getElementById('sfx-click'),
@@ -617,12 +617,14 @@
             flip: document.getElementById('sfx-flip')
         };
 
-        function playSound(type) {
-            if(sfx[type]) {
-                sfx[type].currentTime = 0;
-                sfx[type].play().catch(e=>console.log("SFX error:",e));
-            }
-        }
+        function playSound(name) {
+          const sound = sfx[name];
+
+         if (sound) {
+         sound.currentTime = 0;
+         sound.play().catch(()=>{});
+       }
+    }
 
         // --- Navigation ---
         function goPage(pageId) {
