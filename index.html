@@ -574,7 +574,7 @@
 
         <section id="page15" class="page">
             <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbGV3dzhwNGUwZThhMDlxZjdudHlsNWZyOWllNXc1eGdvem05bHF3aiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/j2ksn3l8m1FrhNR6et/giphy.gif" alt="Emotional Sticker" class="sticker">
-            <h2 style="font-size: 1.5rem; margin-bottom: 10px;">I wanted to say this… don’t get emotional.
+            <h2 id="Final-text" style="font-size: 1.5rem; margin-bottom: 10px;">I wanted to say this… don’t get emotional.
             You’re annoying, overdramatic, and a full-time problem… but unfortunately, you’re my problem.
             I don’t say it, but yeah… you matter.
             And I can roast you all day, but if anyone else does it, they’re dead.
@@ -668,7 +668,7 @@
          let vol = 0;
          const fade = setInterval(() => {
          if (vol < 0.11) {
-            vol += 0.06;
+            vol += 0.09;
             bgm.volume = vol;
           } else {
             clearInterval(fade);
@@ -908,7 +908,7 @@
 
          setTimeout(() => {
             span.classList.add("show");
-        }, index * 400); // delay between words
+        }, index * 300); // delay between words
                });
         }
         /* 💥 ADD RIPPLE CODE BELOW */
@@ -929,7 +929,7 @@
 
             setTimeout(() => {
       ripple.remove();
-        }, 600);
+        }, 500);
 
        });
      });
