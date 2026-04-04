@@ -350,6 +350,37 @@
             line-height: 1.7;
             font-size: clamp(0.95rem, 2.5vw, 1.1rem);
         }
+        .page {
+  opacity: 0;
+  transform: translateY(20px) scale(0.98);
+  transition: all 0.5s ease;
+  pointer-events: none;
+}
+
+.page.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: all;
+}
+        .final-btn.active-glow {
+  animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 0 rgba(236,72,153,0.5);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(236,72,153,0.9);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(236,72,153,0.5);
+  }
+}
+        .final-btn:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 25px rgba(236,72,153,0.8);
+}
     </style>
 </head>
 <body>
@@ -547,7 +578,7 @@
 
             <div id="p15-end" class="hidden" style="width:100%; display:flex; flex-direction:column; align-items:center; margin-top: 20px;">
                 <p>Don't go yet… I still have something for you(you will cry after this😭)</p>
-                <button class="btn" onclick="openVideo()">Open Gift 🎁</button>
+                <button class="btn final-btn" onclick="openVideo()">Open Gift 🎁</button>
             </div>
         </section>
 
@@ -874,7 +905,23 @@
                 document.body.appendChild(confetti);
                 setTimeout(() => confetti.remove(), (duration + 0.5) * 1000);
             }
-        }
+        } 
+          const voice = document.getElementById('voice-audio');
+const bgm = document.getElementById('bgm');
+
+// 🎧 When voice starts
+voice.addEventListener('play', () => {
+    bgm.volume = 0.04; // 🔻 lower bgm
+});
+
+// 🎧 When voice ends
+voice.addEventListener('ended', () => {
+    bgm.volume = 0.12;
+
+    setTimeout(() => {
+    document.querySelector('.final-btn')
+        .classList.add('active-glow');
+    }, 500);
     </script>
 </body>
 </html>
