@@ -185,9 +185,9 @@
            display: grid;
            grid-template-columns: repeat(2, 1fr);
            grid-template-areas:
-          "a b"
-          "c d"
-          "e f";
+          ", a b"
+          ", c d"
+          ", e f";
             gap: 20px;
             justify-content: center;
             align-items: center;
@@ -403,14 +403,14 @@ pointer-events: all;
 </head>
 <body>
 
-    <audio id="bgm" src="Bond-fix.mp3" loop></audio>
-    <audio id="sfx-click" src="Click_effect.mp3"></audio>
-    <audio id="sfx-correct" src="Correct_effect.mp3"></audio>
-    <audio id="sfx-wrong" src="Wrong_effect.mp3"></audio>
-    <audio id="sfx-tick" src="Tick_effect.mp3"></audio>
-    <audio id="sfx-flip" src="Card_flip.mp3"></audio>
-    <audio id="sfx-fool-music" src="fools_music.mp3" loop></audio>
-    <audio id="sfx-fool-voice" src="My_voice-2.mp3"></audio>
+    <audio id="bgm" src="Bond-fix.mp3" preload="auto" loop></audio>
+    <audio id="sfx-click" src="Click_effect.mp3" preload="auto" ></audio>
+    <audio id="sfx-correct" src="Correct_effect.mp3" preload="auto" ></audio>
+    <audio id="sfx-wrong" src="Wrong_effect.mp3" preload="auto" ></audio>
+    <audio id="sfx-tick" src="Tick_effect.mp3" preload="auto" ></audio>
+    <audio id="sfx-flip" src="Card_flip.mp3" preload="auto" ></audio>
+    <audio id="sfx-fool-music" src="fools_music.mp3" preload="auto" loop></audio>
+    <audio id="sfx-fool-voice" src="My_voice-2.mp3" preload="auto" ></audio>
     
     <div id="app">
 
@@ -480,11 +480,11 @@ pointer-events: all;
             <button id="af-btn" class="btn hidden" style="
                 background: linear-gradient(90deg, #f59e0b, #10b981);
                 box-shadow: 0 4px 18px rgba(245,158,11,0.55);
-            " onclick="playSound('click'); exitAprilFools()">There's no button here </button>
+            " onclick="playSound('click'); exitAprilFools()">There's no button here 🌝</button>
         </section>
 
         <section id="page-real-countdown" class="page">
-            <h2>Gey ready for real… 😤</h2>
+            <h2>Get ready for real now?… 😤</h2>
             <div class="countdown-text" id="real-countdown"
                  style="color:#10b981;text-shadow:0 0 20px rgba(16,185,129,0.6);">5</div>
         </section>
@@ -498,7 +498,7 @@ pointer-events: all;
         <section id="page5" class="page">
             <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExdXFwa2VuZHNveDkyZmk2b3d5a284dzUycmYweWE2ZTluZmVhcGJqcSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ruyS8Zw9sBqE5UjOnY/giphy.gif" alt="Sad Sticker" class="sticker">
             <h2>Why did you choose this? 😃🔪</h2>
-            <p> Tell me what I hate the most?</p>
+            <p> Now tell me what i HATE the most?</p>
             <button class="btn" onclick="checkHate(this, false)">Coffee</button>
             <button class="btn" onclick="checkHate(this, true)">choco-mint</button>
             <button class="btn" onclick="checkHate(this, false)">Pizza</button>
@@ -818,8 +818,7 @@ pointer-events: all;
         }
 
         // --- April Fools Logic ---
-        const foolMusic = document.getElementById('sfx-fool-music');
-        foolMusic.volume = 0.12;
+        let foolMusic; // 👈 global
 
         function initAprilFools() {
             const btn = document.getElementById('af-btn');
@@ -831,9 +830,12 @@ pointer-events: all;
             voiceEl.currentTime = 0;
 
             // Pause BGM, start fool music
-            bgm.pause();
-            foolMusic.currentTime = 0;
-            foolMusic.play().catch(() => {});
+             bgm.pause();
+
+              foolMusic = document.getElementById('sfx-fool-music'); // 👈 IMPORTANT
+              foolMusic.currentTime = 0;
+              foolMusic.volume = 0.1;
+              foolMusic.play().catch(() => {});
 
             // Auto-play voice note after 600ms
             setTimeout(() => {
@@ -869,6 +871,19 @@ pointer-events: all;
                 setTimeout(startRealCountdown, 300);
             }, 450);
         }
+          function fade(volumeTarget, music) {
+    const fade = setInterval(() => {
+        if (Math.abs(music.volume - volumeTarget) > 0.01) {
+            music.volume += (music.volume < volumeTarget ? 0.01 : -0.01);
+        } else {
+            clearInterval(fade);
+        }
+    }, 100);
+}
+         const voiceEl = document.getElementById('sfx-fool-voice');
+
+           voiceEl.addEventListener('play', () => fade(0.04, foolMusic));
+           voiceEl.addEventListener('ended', () => fade(0.1, foolMusic));
 
         function startRealCountdown() {
             let count = 5;
